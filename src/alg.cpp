@@ -5,12 +5,10 @@
 int priority(char p) {
     if (p == '*' || p == '/') {
         return 3;
-    }
-    else {
+    } else {
         if (p == '+' || p == '-') {
             return 2;
-        }
-        else if (p == ')')
+        } else if (p == ')')
             return 1;
         else
             return 0;
@@ -24,11 +22,11 @@ std::string infx2pstfx(std::string inf) {
         if ((inf[i] >= '0') && (inf[i] <= '9')) {
             stroka += inf[i];
             stroka += ' ';
-        }
-        else if ((inf[i] == '(') || (priority(inf[i]) > priority(stack1.get())) || (stack1.isEmpty())) {
+        } else if ((inf[i] == '(') 
+                 || (priority(inf[i]) > priority(stack1.get())) 
+                 || (stack1.isEmpty())) {
             stack1.push(inf[i]);
-        }
-        else if (inf[i] == ')') {
+        } else if (inf[i] == ')') {
             while (!stack1.isEmpty() && stack1.get() != '(') {
                 stroka += stack1.get();
                 stroka += ' ';
@@ -36,9 +34,9 @@ std::string infx2pstfx(std::string inf) {
             }
             if (stack1.get() == '(')
                 stack1.pop();
-        }
-        else {
-            while ((!stack1.isEmpty()) && (priority(stack1.get()) >= priority(inf[i]))) {
+        } else {
+            while ((!stack1.isEmpty()) 
+                   && (priority(stack1.get()) >= priority(inf[i]))) {
                 stroka = stack1.get();
                 stroka += ' ';
                 stack1.pop();
@@ -60,8 +58,7 @@ int eval(std::string pst) {
     for (int i = 0; i < pst.length(); i++) {
         if ((pst[i] >= '0') && (pst[i] <= '9')) {
             stack2.push(pst[i]- '0');
-        }
-        else
+        } else {
             if (pst[i] != ' ') {
                 int a2 = stack2.get();
                 stack2.pop();
@@ -69,17 +66,15 @@ int eval(std::string pst) {
                 stack2.pop();
                 if (pst[i] == '-') {
                     stack2.push(a1 - a2);
-                }
-                else if (pst[i] == '+') {
+                } else if (pst[i] == '+') {
                     stack2.push(a1 + a2);
-                }
-                else if (pst[i] == '*') {
+                } else if (pst[i] == '*') {
                     stack2.push(a1 * a2);
-                }
-                else {
+                } else {
                     stack2.push(a1 / a2);
-                }
+                }    
             }
+        }
     }
     output = stack2.get();
     return output;
