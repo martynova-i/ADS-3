@@ -5,8 +5,7 @@
 int priority(char p) {
     if (p == '*' || p == '/') {
         return 3;
-    } else {
-        if (p == '+' || p == '-') {
+    } else if (p == '+' || p == '-') {
             return 2;
         } else if (p == ')')
             return 1;
@@ -22,8 +21,8 @@ std::string infx2pstfx(std::string inf) {
         if ((inf[i] >= '0') && (inf[i] <= '9')) {
             stroka += inf[i];
             stroka += ' ';
-        } else if ((inf[i] == '(') 
-                 || (priority(inf[i]) > priority(stack1.get())) 
+        } else if ((inf[i] == '(')
+                 || (priority(inf[i]) > priority(stack1.get()))
                  || (stack1.isEmpty())) {
             stack1.push(inf[i]);
         } else if (inf[i] == ')') {
@@ -35,7 +34,7 @@ std::string infx2pstfx(std::string inf) {
             if (stack1.get() == '(')
                 stack1.pop();
         } else {
-            while ((!stack1.isEmpty()) 
+            while ((!stack1.isEmpty())
                    && (priority(stack1.get()) >= priority(inf[i]))) {
                 stroka = stack1.get();
                 stroka += ' ';
@@ -72,7 +71,7 @@ int eval(std::string pst) {
                     stack2.push(a1 * a2);
                 } else {
                     stack2.push(a1 / a2);
-                }    
+                }
             }
         }
     }
