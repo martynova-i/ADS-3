@@ -2,15 +2,15 @@
 #include <string>
 #include "tstack.h"
 
-int priority(char p) {
+static int priority(char p) {
     if (p == '*' || p == '/') {
         return 3;
-    } else if (p == '+' || p == '-') {
+    } else {
+        if (p == '+' || p == '-') {
             return 2;
-        } else if (p == ')')
-            return 1;
-        else
+        } else {
             return 0;
+        }
     }
 }
 
