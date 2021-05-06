@@ -2,15 +2,15 @@
 #include <string>
 #include "tstack.h"
 
-static int priority(char p) {
-    if (p == '*' || p == '/') {
-        return 3;
-    } else {
-        if (p == '+' || p == '-') {
-            return 2;
-        } else {
-            return 0;
-        }
+int priority(char p) {
+    switch (p) {
+    case '(': return 0;
+    case ')': return 1;
+    case '+': return 2;
+    case '-': return 2;
+    case '*': return 3;
+    case '/': return 3;
+    default:return -1;
     }
 }
 
@@ -26,13 +26,14 @@ std::string infx2pstfx(std::string inf) {
                  || (stack1.isEmpty())) {
             stack1.push(inf[i]);
         } else if (inf[i] == ')') {
-            while (!stack1.isEmpty() && stack1.get() != '(') {
-                stroka += stack1.get();
+            char ch = stack1.get();
+            stack1.pop();
+            while (ch != '(') {
+                stroka += ch;
                 stroka += ' ';
-                stack1.pop();
+              ch = stack1.get();
+              stack1.pop();
             }
-            if (stack1.get() == '(')
-                stack1.pop();
         } else {
             while ((!stack1.isEmpty())
                    && (priority(stack1.get()) >= priority(inf[i]))) {
@@ -48,6 +49,7 @@ std::string infx2pstfx(std::string inf) {
                 stroka += ' ';
                 stack1.pop();
             }
+    stroka.pop_back();
     return stroka;
 }
 
@@ -56,9 +58,8 @@ int eval(std::string pst) {
     int output;
     for (int i = 0; i < pst.length(); i++) {
         if ((pst[i] >= '0') && (pst[i] <= '9')) {
-            stack2.push(pst[i]- '0');
-        } else {
-            if (pst[i] != ' ') {
+            stack2.push(pst[i] - '0');
+        } else if (pst[i] != ' ') {
                 int a2 = stack2.get();
                 stack2.pop();
                 int a1 = stack2.get();
@@ -73,7 +74,6 @@ int eval(std::string pst) {
                     stack2.push(a1 / a2);
                 }
             }
-        }
     }
     output = stack2.get();
     return output;
