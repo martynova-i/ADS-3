@@ -37,7 +37,7 @@ std::string infx2pstfx(std::string inf) {
         } else {
             while ((!stack1.isEmpty())
                    && (priority(stack1.get()) >= priority(inf[i]))) {
-                stroka = stack1.get();
+                stroka += stack1.get();
                 stroka += ' ';
                 stack1.pop();
             }
